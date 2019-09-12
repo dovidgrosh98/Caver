@@ -43,14 +43,14 @@ passport.use(
     },
     async (req, username, password, done) => {
       try {
-        const { body: { name, email, confirmPassword } } = req
+        const { body: { name, email, isRenter } } = req
 
         const user = await User.create({
           name: name,
           username: username,
           email: email,
           password: password,
-          confirmPassword: confirmPassword
+          isRenter: isRenter
         })
 
         if (!user) {

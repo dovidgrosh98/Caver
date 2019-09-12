@@ -27,10 +27,6 @@ const User = db.define('user', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  confirmPassword: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
   isRenter: {
     type: Sequelize.BOOLEAN,
     allowNull: false,

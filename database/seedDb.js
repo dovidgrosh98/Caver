@@ -12,7 +12,6 @@ const main = async () => {
       username: 'jkim3360',
       email: 'jamesdaehokim@gmail.com',
       password: 'password',
-      confirmPassword: 'password',
       isRenter: false
     })
     const David = await User.create({
@@ -20,7 +19,6 @@ const main = async () => {
       username: 'dgrosh123',
       email: 'dgrosh123@gmail.com',
       password: 'password',
-      confirmPassword: 'password',
       isRenter: true
     })
     const Justin = await User.create({
@@ -28,7 +26,6 @@ const main = async () => {
       username: 'jlendle246',
       email: 'jlendle246@gmail.com',
       password: 'password',
-      confirmPassword: 'password',
       isRenter: false
     })
     const Connor = await User.create({
@@ -36,7 +33,6 @@ const main = async () => {
       username: 'cg999',
       email: 'cgarity@gmail.com',
       password: 'password',
-      confirmPassword: 'password',
       isRenter: false
     })
 
