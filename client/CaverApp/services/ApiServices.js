@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { AsyncStorage } from 'react-native'
 import { getUser } from './Credentials'
 import { GOOGLE_MAPS } from 'react-native-dotenv'
 const JwtToken = 'token'
@@ -42,7 +43,6 @@ export const signUpUser = async (user) => {
 	try {
 		const res = await api.post('/auth/signup', user)
     const data = { status: res.status, data: res.data }
-    console.log(data)
 		return data
 	} catch (error) {
 		throw error
@@ -78,3 +78,15 @@ export const getGeoCode = async (name,city,state) => {
 			throw error
 	}
 }
+
+export const createListing = async (data) => {
+	try {
+		const id = await AsyncStorage.getItem('')
+		const res = await api.post(`/list/user_id/${id}`, data)
+		console.log(res)
+		return res
+	} 
+	catch (error) {
+		throw error	
+	}
+} 

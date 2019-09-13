@@ -6,7 +6,7 @@ import { Platform } from '@unimodules/core'
 import { background } from '../../../styles/Colors';
 import MapView from 'react-native-maps'
 import { Marker } from 'react-native-maps'
-
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 
@@ -19,7 +19,8 @@ class ListingScreen extends Component {
       listing: {},
       longitude: '',
       latitude: '',
-      currentLocation: {}
+      currentLat: '',
+      currentLng: ''
     }
   }
 
@@ -37,13 +38,15 @@ class ListingScreen extends Component {
     const { listing: { address, city, state } } = this.state
     const geoLocation = await getGeoCode(address, city, state)
     const { lat, lng } = geoLocation
-    console.log(lat)
-    this.setState({longitude: lng, latitude: lat})
+    this.setState({ longitude: lng, latitude: lat })
     navigator.geolocation.getCurrentPosition(
       position => {
-        const currentLocation = JSON.stringify(position);
-    
-        this.setState({ currentLocation });
+        console.log(position)
+        const currentLocation = position
+        this.setState({
+          currentLng: currentLocation.coords.longitude,
+          currentLat: currentLocation.coords.latitude
+        })
       },
       error => Alert.alert(error.message),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
@@ -51,13 +54,12 @@ class ListingScreen extends Component {
   }
 
   render() {
-    console.log(this.state.currentLocation.latitude)
-    const { listing } = this.state
-    bedIcon = Platform.OS === 'ios' ? `ios-bed` : `md-print`
+    const { listing, currentLat, currentLng, longitude, latitude } = this.state
+    bedIcon = Platform.OS === 'ios' ? `ios-bed` : `md-bed`
     personIcon = Platform.OS === 'ios' ? `ios-person` : `md-person`
-    wifiIcon = Platform.OS === 'ios' ? `ios-wifi` : `ios-wifi`
+    wifiIcon = Platform.OS === 'ios' ? `ios-wifi` : `md-wifi`
     return (
-      <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.textContainer}>
           <Image
             source={{ uri: listing.imgUrl }}
@@ -84,22 +86,29 @@ class ListingScreen extends Component {
           </View>
         </View>
         <MapView
+          liteMode={true}
           style={styles.map}
-          initialCamera={{
-            latitude: this.state.latitude,
-            longitude: this.state.longitude,
+          region={{
+            latitude: latitude,
+            longitude: longitude,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
         >
           <Marker
             coordinate={{
-              latitude: this.state.currentLocation.latitude,
-              longitude: this.state.currentLocation.longitude,
+              latitude: latitude,
+              longitude: longitude,
+            }}
+          />
+          <Marker
+            coordinate={{
+              latitude: currentLat,
+              longitude: currentLng
             }}
           />
         </MapView>
-      </View>
+      </ScrollView>
     )
   }
 }
@@ -111,16 +120,20 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    flex: 4,
-    borderRadius: 40
+    borderRadius: 30,
+    flex: 5,
   },
   textContainer: {
     width: '100%',
-    flex: 2
+    flex: 3
   },
   textTitle: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    flex: 1
+  },
+  textDescription: {
+    flex: 3
   },
   featureContainer: {
     width: '100%',
@@ -133,7 +146,8 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 2,
-    width: '100%'
+    width: '100%',
+    backgroundColor: 'red'
   }
 })
 
