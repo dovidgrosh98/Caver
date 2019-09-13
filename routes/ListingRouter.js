@@ -19,7 +19,7 @@ ListingRouter.get('/:id', async (req, res) => {
     const listing = await Listing.findByPk(id, {
       include: [User]
     })
-    if (!project) throw Error
+    if (!listing) throw Error
     res.send(listing)
   } catch (e) {
     res.status(404).json({ msg: e.message })

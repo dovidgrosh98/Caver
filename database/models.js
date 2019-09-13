@@ -42,9 +42,17 @@ const Listing = db.define('listing', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  location: {
+  address: {
     type: Sequelize.STRING,
     allowNull: false,
+  },
+  city: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  state: {
+    type: Sequelize.STRING,
+    allowNull: false
   },
   description: {
     type: Sequelize.TEXT,
@@ -54,7 +62,18 @@ const Listing = db.define('listing', {
     type: Sequelize.INTEGER,
     allowNull: false
   },
-  user_id: Sequelize.INTEGER
+  beds: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  adults: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  freeWifi: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false
+  }
 })
 
 User.beforeCreate(async (user, options) => {

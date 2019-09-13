@@ -46,6 +46,7 @@ export default class SignInScreen extends Component {
     try {
       await this.handleVerify()
       const resp = await loginUser(user)
+      console.log(resp)
       if (resp.status === 200) {
         const setUser = await storeUser(resp.token, resp.userId.toString(), resp.isRenter)
         if (setUser) {
