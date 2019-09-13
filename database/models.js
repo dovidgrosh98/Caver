@@ -2,8 +2,8 @@ const { Sequelize } = require('sequelize')
 const bcrypt = require('bcrypt')
 
 // connection to the database
-const db = new Sequelize({
-  database: 'caver_db',
+const db = new Sequelize(process.env.DATABASE_URL, {
+  // database: 'caver_db',
   dialect: 'postgres'
 })
 

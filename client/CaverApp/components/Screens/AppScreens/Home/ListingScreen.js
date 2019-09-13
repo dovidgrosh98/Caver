@@ -88,8 +88,8 @@ class ListingScreen extends Component {
           initialCamera={{
             latitude: this.state.latitude,
             longitude: this.state.longitude,
-            latitudeDelta: 0,
-            longitudeDelta: 0,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
           }}
         >
           <Marker

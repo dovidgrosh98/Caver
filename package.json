@@ -10,8 +10,10 @@
     "db:seed": "node ./database/seedDb.js",
     "db:go": "npm run db:reset && npm run db:seed",
     "server": "npx nodemon server.js",
-    "client": "cd client/ && npm start",
-    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+    "heroku-postbuild": "cd client/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
+    "client": "cd client && npm start",
+    "dev": "concurrently --kill-others-on-fail \"npm run start\" \"npm run client\"",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
