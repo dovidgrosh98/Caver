@@ -17,7 +17,7 @@ const Splash = (props) => {
 
 	return (
 		<View style={styles.container}>
-			<Image source={require('../../../assets/cryptkeyLogo.png')} />
+			<Image source={require('../../../assets/caverLogo.png')} />
 		</View>
 	)
 }

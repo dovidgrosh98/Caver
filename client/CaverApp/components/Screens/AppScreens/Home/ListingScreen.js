@@ -18,7 +18,8 @@ class ListingScreen extends Component {
       id: props.navigation.state.params.id,
       listing: {},
       longitude: '',
-      latitude: ''
+      latitude: '',
+      currentLocation: {}
     }
   }
 
@@ -38,9 +39,19 @@ class ListingScreen extends Component {
     const { lat, lng } = geoLocation
     console.log(lat)
     this.setState({longitude: lng, latitude: lat})
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        const currentLocation = JSON.stringify(position);
+    
+        this.setState({ currentLocation });
+      },
+      error => Alert.alert(error.message),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    );
   }
 
   render() {
+    console.log(this.state.currentLocation.latitude)
     const { listing } = this.state
     bedIcon = Platform.OS === 'ios' ? `ios-bed` : `md-print`
     personIcon = Platform.OS === 'ios' ? `ios-person` : `md-person`
@@ -74,17 +85,17 @@ class ListingScreen extends Component {
         </View>
         <MapView
           style={styles.map}
-          camera={{
+          initialCamera={{
             latitude: this.state.latitude,
             longitude: this.state.longitude,
-            // latitudeDelta: 0.0922,
-            // longitudeDelta: 0.0421,
+            latitudeDelta: 0,
+            longitudeDelta: 0,
           }}
         >
           <Marker
             coordinate={{
-              latitude: this.state.latitude,
-              longitude: this.state.longitude,
+              latitude: this.state.currentLocation.latitude,
+              longitude: this.state.currentLocation.longitude,
             }}
           />
         </MapView>
