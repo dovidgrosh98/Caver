@@ -2,7 +2,7 @@ import axios from 'axios'
 import { getUser } from './Credentials'
 import { GOOGLE_MAPS } from 'react-native-dotenv'
 const JwtToken = 'token'
-const BASE_URL = `http://localhost:3000`
+const BASE_URL = `https://caver-app.herokuapp.com/`
 
 const api = axios.create({
 	baseURL: BASE_URL,
