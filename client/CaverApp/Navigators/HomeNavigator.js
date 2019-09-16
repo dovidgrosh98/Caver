@@ -10,5 +10,11 @@ export const HomeNavigator = createStackNavigator(
     Home: HomeScreen,
     Listing: ListingScreen,
     Booking: BookingScreen
+  },
+  {
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false
+    }
   }
 )

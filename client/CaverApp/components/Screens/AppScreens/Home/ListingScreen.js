@@ -5,7 +5,7 @@ import { Ionicons as IconComponent } from '@expo/vector-icons'
 import { Platform } from '@unimodules/core'
 import { background } from '../../../styles/Colors';
 import MapView from 'react-native-maps'
-import { Marker } from 'react-native-maps'
+import { Marker, Polyline } from 'react-native-maps'
 import { ScrollView } from 'react-native-gesture-handler';
 
 
@@ -41,7 +41,6 @@ class ListingScreen extends Component {
     this.setState({ longitude: lng, latitude: lat })
     navigator.geolocation.getCurrentPosition(
       position => {
-        console.log(position)
         const currentLocation = position
         this.setState({
           currentLng: currentLocation.coords.longitude,
@@ -70,6 +69,11 @@ class ListingScreen extends Component {
             <Text>{`$${listing.costPerNight}/night`}</Text>
           </View>
           <Text>{listing.description}</Text>
+          <Text
+            onPress={() => this.props.navigation.navigate('Booking', { id: listing.id })}
+          >
+            Book
+          </Text>
         </View>
         <View style={styles.featureContainer}>
           <View>
@@ -96,16 +100,26 @@ class ListingScreen extends Component {
           }}
         >
           <Marker
+            title='Listing'
+            pinColor='black'
             coordinate={{
               latitude: latitude,
               longitude: longitude,
             }}
           />
           <Marker
+            title='Current Location'
+            pinColor='black'
             coordinate={{
               latitude: currentLat,
               longitude: currentLng
             }}
+          />
+          <Polyline
+            coordinates={[
+              { latitude: latitude, longitude: longitude },
+              { latitude: currentLat, longitude: currentLng }
+            ]}
           />
         </MapView>
       </ScrollView>
@@ -147,7 +161,6 @@ const styles = StyleSheet.create({
   map: {
     flex: 2,
     width: '100%',
-    backgroundColor: 'red'
   }
 })
 

@@ -12,14 +12,16 @@ import { Ionicons as IconComponent } from '@expo/vector-icons'
 import { AuthNavigator, HomeNavigator } from './Navigators'
 import HomeScreen from './components/Screens/AppScreens/Home/HomeScreen';
 import ChatScreen from './components/Screens/AppScreens/Chat/ChatScreen';
-import CreateListingScreen from './components/Screens/AppScreens/CreateListingScreen/CreateListingScreen';
+import CreateListingScreen from './components/Screens/AppScreens/CreateListing/CreateListingScreen';
+import ProfileScreen from './components/Screens/AppScreens/Profile/ProfileScreen';
 
 // Navigators
 const TabNavigator = createBottomTabNavigator(
 	{
 		Home: HomeNavigator,
 		Create: CreateListingScreen,
-		Chat: ChatScreen
+		Chat: ChatScreen,
+		Profile: ProfileScreen
 	},
 	{
 		defaultNavigationOptions: ({ navigation }) => ({
@@ -74,6 +76,5 @@ export default createAppContainer(
 	createSwitchNavigator({
 		Auth: AuthNavigator,
 		App: TabNavigator
-		// Admin: TabNavigator  
 	})
 )

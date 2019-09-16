@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import { Input, Button } from '../../../common'
 import { StyleSheet, View, Text, Switch } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
+import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
 import { createListing } from '../../../../services/ApiServices';
-
+import * as ImagePicker from 'expo-image-picker';
 class CreateListingScreen extends Component {
   constructor(props) {
     super(props);
@@ -19,6 +21,28 @@ class CreateListingScreen extends Component {
       adults: '',
       freeWifi: false
     }
+  }
+
+  componentDidMount() {
+    this.getPermissionAsync();
+  }
+
+  getPermissionAsync = async () => {
+    if (Constants.platform.ios) {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!');
+      }
+    }
+  }
+
+  uploadImage = async () => {
+
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
   }
 
   handleChange = (name, value) => {
@@ -59,7 +83,6 @@ class CreateListingScreen extends Component {
           adults,
           freeWifi
         })
-        console.log(resp)
         if (resp.status === 200) {
         }
       }
@@ -73,19 +96,24 @@ class CreateListingScreen extends Component {
       <ScrollView
         contentContainerStyle={styles.container}
         scrollEnabled={true}
-        >
-          <Input
+      >
+        <Input
           label="Title"
           secureTextEntry={true}
           onChangeText={(text) => this.handleChange('name', text)}
           style={styles.input}
         />
-        <Input
+        <Text
+          onPress={this.uploadImage}
+        >
+          Upload Image
+        </Text>
+        {/* <Input
           label="Image"
           secureTextEntry={true}
           onChangeText={(text) => this.handleChange('imgUrl', text)}
           style={styles.input}
-        />
+        /> */}
         <Input
           label="Address"
           secureTextEntry={true}
@@ -118,7 +146,7 @@ class CreateListingScreen extends Component {
         <Input
           label="Amount of Beds"
           secureTextEntry={true}
-          onChangeText={(text) => this.handleChange('Beds', text)}
+          onChangeText={(text) => this.handleChange('beds', text)}
           style={styles.input}
         />
         <Input
@@ -127,15 +155,15 @@ class CreateListingScreen extends Component {
           onChangeText={(text) => this.handleChange('adults', text)}
           style={styles.input}
         />
-        {/* <View>
+        <View>
           <Text>Free Wifi?</Text>
           <Switch
             onValueChange={this.toggleSwitch}
             value={this.state.freeWifi}
           />
-        </View> */}
-        <Button 
-        onPress={this.handleSubmit}
+        </View>
+        <Button
+          onPress={this.handleSubmit}
         />
       </ScrollView>
     )

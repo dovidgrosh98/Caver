@@ -30,10 +30,7 @@ app.use('/auth', AuthRouter)
 app.get('/', async (req, res) => {
 	res.send('connected')
 })
-
 app.use('/list', ListingRouter)
-
-
 app.use('/users', UserRouter)
 app.use('/app', appRouter)
 

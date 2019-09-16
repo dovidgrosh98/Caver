@@ -3,9 +3,11 @@ const bcrypt = require('bcrypt')
 
 // connection to the database
 // comment "process.env.DATABASE_URL," for local server use:
-const db = new Sequelize(process.env.DATABASE_URL, {
+const db = new Sequelize(
+  // process.env.DATABASE_URL, 
+  {
   // uncomment for local use:
-  // database: 'caver_db',
+  database: 'caver_db',
   dialect: 'postgres'
 })
 
@@ -78,6 +80,13 @@ const Listing = db.define('listing', {
   }
 })
 
+const UserBooking = db.define('user_booking', {
+  startDate: Sequelize.DATE,
+  endDate: Sequelize.DATE,
+  userId: Sequelize.INTEGER,
+  listingId: Sequelize.INTEGER
+});
+
 User.beforeCreate(async (user, options) => {
   const hashedPassword = await bcrypt.hash(
     user.password,
@@ -88,11 +97,14 @@ User.beforeCreate(async (user, options) => {
 
 // define relationships
 User.hasMany(Listing)
-
 Listing.belongsTo(User)
+
+// User.belongsToMany(Listing, { through: UserBooking })
+// Listing.belongsToMany(User, { through: UserBooking })
 
 module.exports = {
   db,
   User,
-  Listing
+  Listing,
+  UserBooking
 }
