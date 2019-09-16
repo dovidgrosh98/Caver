@@ -128,3 +128,13 @@ export const allBookings = async (id) => {
 		throw error	
 	}
 }
+
+export const deleteBook = async (id) => {
+	try {
+		const booking = await api.delete(`/list/${id}/book`)
+		console.log(booking)
+	} 
+	catch (error) {
+		throw error	
+	}
+}

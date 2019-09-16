@@ -2,12 +2,12 @@ const { Sequelize } = require('sequelize')
 const bcrypt = require('bcrypt')
 
 // connection to the database
-// comment "process.env.DATABASE_URL," for local server use:
 const db = new Sequelize(
-  process.env.DATABASE_URL, 
+  // comment "process.env.DATABASE_URL," for local server use:
+  // process.env.DATABASE_URL, 
   {
   // uncomment for local use:
-  // database: 'caver_db',
+  database: 'caver_db',
   dialect: 'postgres'
 })
 
