@@ -12,7 +12,7 @@ export const Input = ({
 	value,
 	onChangeText,
 	style,
-	secureTextEntry,
+	// secureTextEntry,
 	placeholder,
 	error,
 	focused
@@ -27,7 +27,7 @@ export const Input = ({
 				placeholderTextColor={placeHolderColor}
 				autoCompleteType="off"
 				autoCapitalize="none"
-				secureTextEntry={secureTextEntry}
+				// secureTextEntry={secureTextEntry}
 				onChangeText={onChangeText}
 				style={[
 					error

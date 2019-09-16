@@ -30,15 +30,13 @@ app.use('/auth', AuthRouter)
 app.get('/', async (req, res) => {
 	res.send('connected')
 })
-
 app.use('/list', ListingRouter)
-
-
 app.use('/users', UserRouter)
 app.use('/app', appRouter)
 
 
 app.use(passport.initialize())
+
 if (process.env.NODE_ENV == "production") {
   app.use('*', (req, res) => res.sendFile(path.join(__dirname, './client/build', "index.html")));
 }

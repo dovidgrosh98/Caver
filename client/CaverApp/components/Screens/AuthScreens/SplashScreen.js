@@ -6,7 +6,6 @@ const Splash = (props) => {
 	const getToken = async () => {
     // AsyncStorage.clear()
     const token = await getUser()
-    // if (token && isRenter) props.navigation.navigate('Admin')
 		if (token) props.navigation.navigate('App')
 		else props.navigation.navigate('SignIn')
     }

@@ -1,8 +1,9 @@
 import axios from 'axios'
+import { AsyncStorage } from 'react-native'
 import { getUser } from './Credentials'
 import { GOOGLE_MAPS } from 'react-native-dotenv'
-const JwtToken = 'token'
-const BASE_URL = `https://caver-app.herokuapp.com/`
+const JwtToken = AsyncStorage.getItem('token')
+const BASE_URL = `http://localhost:3000`
 
 const api = axios.create({
 	baseURL: BASE_URL,
@@ -42,7 +43,6 @@ export const signUpUser = async (user) => {
 	try {
 		const res = await api.post('/auth/signup', user)
     const data = { status: res.status, data: res.data }
-    console.log(data)
 		return data
 	} catch (error) {
 		throw error
@@ -69,6 +69,16 @@ export const getListing = async (id) => {
 	}
 }
 
+export const getUserListings = async (id) => {
+	try {
+		const res = await api.get(`/users/${id}`)
+		return res
+	} 
+	catch (error) {
+		throw error	
+	}
+}
+
 export const getGeoCode = async (name,city,state) => {
 	try {
 			const url = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${name},${city},${state}&key=${GOOGLE_MAPS}`);
@@ -76,5 +86,45 @@ export const getGeoCode = async (name,city,state) => {
 			return resp.results[0].geometry.location
 	} catch (error) {
 			throw error
+	}
+}
+
+export const createListing = async (data) => {
+	try {
+		const id = await AsyncStorage.getItem('userId')
+		const res = await api.post(`/list/create/user/${id}`, data)
+		return res
+	} 
+	catch (error) {
+		throw error	
+	}
+} 
+
+export const userListingDelete = async (id) => {
+	try {
+		const deletedList = await api.delete(`/list/${id}`)
+	} 
+	catch (error) {
+		throw error	
+	}
+}
+
+export const bookList = async (userId, listId, data) => {
+	try {
+		const book = await api.post(`/list/book/user/${userId}/${listId}`, data)
+		return book
+	} 
+	catch (error) {
+		throw error	
+	}
+}
+
+export const allBookings = async (id) => {
+	try {
+		const bookings = await api.get(`/list/${id}/book`)
+		return bookings.data
+	} 
+	catch (error) {
+		throw error	
 	}
 }
