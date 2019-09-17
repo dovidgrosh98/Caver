@@ -100,6 +100,16 @@ export const createListing = async (data) => {
 	}
 } 
 
+export const updateListing = async (data, id) => {
+	try {
+		const res = await api.put(`/list/${id}`, data)
+		return res
+	} 
+	catch (error) {
+		throw error	
+	}
+} 
+
 export const userListingDelete = async (id) => {
 	try {
 		const deletedList = await api.delete(`/list/${id}`)

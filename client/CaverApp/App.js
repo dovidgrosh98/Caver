@@ -9,7 +9,7 @@ import { highlightColor, textColor, primary } from './components/styles/Colors'
 import { Platform } from '@unimodules/core'
 import { Ionicons as IconComponent } from '@expo/vector-icons'
 // Navigators import
-import { AuthNavigator, HomeNavigator } from './Navigators'
+import { AuthNavigator, HomeNavigator, ProfileNavigator } from './Navigators'
 import HomeScreen from './components/Screens/AppScreens/Home/HomeScreen';
 import ChatScreen from './components/Screens/AppScreens/Chat/ChatScreen';
 import CreateListingScreen from './components/Screens/AppScreens/CreateListing/CreateListingScreen';
@@ -21,7 +21,7 @@ const TabNavigator = createBottomTabNavigator(
 		Home: HomeNavigator,
 		Create: CreateListingScreen,
 		Chat: ChatScreen,
-		Profile: ProfileScreen
+		Profile: ProfileNavigator
 	},
 	{
 		defaultNavigationOptions: ({ navigation }) => ({
@@ -35,6 +35,12 @@ const TabNavigator = createBottomTabNavigator(
 								? `ios-home${focused ? '' : ''}`
 								: `md-home${focused ? '' : ''}`
 						break
+						case 'Bookmark':
+						iconName =
+							Platform.OS === 'ios'
+								? `ios-bookmark${focused ? '' : ''}`
+								: `md-bookmark${focused ? '' : ''}`
+						break
 					case 'Create':
 						iconName =
 							Platform.OS === 'ios'
@@ -47,8 +53,8 @@ const TabNavigator = createBottomTabNavigator(
 					case 'Chat':
 						iconName =
 							Platform.OS === 'ios'
-								? `ios-chatbubbles${focused ? '' : ''}`
-								: `md-chatbubbles${focused ? '' : ''}`
+								? `ios-text${focused ? '' : ''}`
+								: `md-text${focused ? '' : ''}`
 						break
 					case 'Profile':
 						iconName =
@@ -65,7 +71,7 @@ const TabNavigator = createBottomTabNavigator(
 			activeTintColor: highlightColor,
 			inactiveTintColor: textColor,
 			style: {
-				backgroundColor: primary
+				backgroundColor: 'white'
 			}
 		},
 		initialRouteName: 'Home'

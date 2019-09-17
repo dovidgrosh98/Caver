@@ -39,16 +39,16 @@ class ProfileScreen extends Component {
 
   fetchBookings = async () => {
     const bookings = await allBookings(this.state.id)
-    bookings.map(async (booking) => {
+    bookings.forEach(async (booking) => {
       const listing = await getListing(booking.listingId)
       this.setState(prevState => {
-        return this.state.bookings = [...prevState.bookings, {booking: listing.data, id: booking.id}]
+        return this.state.bookings = [...prevState.bookings, { booking: listing.data, id: booking.id }]
       })
     })
   }
 
   editListing = (id) => {
-
+    this.props.navigation.navigate('Edit', { id })
   }
 
   deleteListing = async (id) => {
@@ -94,14 +94,13 @@ class ProfileScreen extends Component {
           source={{ uri: item.booking.imgUrl }}
         />
         <Text
-        onPress={() => this.cancelBooking(item.id)}
+          onPress={() => this.cancelBooking(item.id)}
         >
           Cancel
         </Text>
       </View>
     )
   }
-
 
   render() {
     const { listings, bookings } = this.state
@@ -110,13 +109,13 @@ class ProfileScreen extends Component {
         <FlatList
           data={listings}
           renderItem={(item) => this.renderOwnItem(item)}
-          keyExtractor={(item, index) => index}
+          keyExtractor={(item, index) => index.toString()}
           horizontal={true}
         />
         <FlatList
           data={bookings}
           renderItem={(item) => this.renderBookedItem(item)}
-          keyExtractor={(item, index) => index}
+          keyExtractor={(item, index) => index.toString()}
           horizontal={true}
         />
       </View>

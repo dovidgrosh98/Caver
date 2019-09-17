@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { View, Text, FlatList, Image, StyleSheet, Button } from 'react-native'
+import { View, Text, FlatList, Image, StyleSheet, Button, TextInput } from 'react-native'
 import { allListings } from '../../../../services/ApiServices';
-import { background } from '../../../styles/Colors';
+import { FontAwesome } from '@expo/vector-icons'
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -23,17 +23,28 @@ class HomeScreen extends Component {
   renderListings = (listing) => {
     const { item } = listing
     return (
-      <View style={styles.container}>
+      <View style={styles.card}>
         <Image
           source={{ uri: item.imgUrl }}
           style={styles.image}
         />
-        <Text style={styles.text}>{item.name}</Text>
-        <Text>{`$${item.costPerNight}/Night`}</Text>
-        <Text>{item.description}</Text>
-        <Button
-          title="Book"
-          onPress={() => this.props.navigation.navigate('Listing', {id: item.id})}
+        <View style={styles.textHeader}>
+          <Text>{`$${item.costPerNight} Per Night`}</Text>
+          <Text 
+          style={styles.button}
+          onPress={() => this.props.navigation.navigate('Listing', { id: item.id })}
+          >
+            Book Now
+          </Text>
+
+        </View>
+        <Text style={styles.title}>{item.name}</Text>
+        <Text style={styles.area}>{item.city}, {item.state}</Text>
+        <Text style={styles.features}>{item.beds} Beds, {item.adults} Adults</Text>
+        <FontAwesome 
+        onPress={() => this.props.navigation.navigate('Chat', { id: item.id })}
+        style={styles.icon} 
+        name={'comment'} size={20} 
         />
       </View>
     )
@@ -42,28 +53,59 @@ class HomeScreen extends Component {
   render() {
     const { listings } = this.state
     return (
-      <FlatList
-        data={listings}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={(item) => this.renderListings(item)}
-      />
+      <View style={styles.container}>
+        <FlatList
+          data={listings}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={(item) => this.renderListings(item)}
+        />
+      </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
+    width: '100%',
+    marginTop: 30
+  },
+  card: {
     alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 20,
-    backgroundColor: background
+  },
+  textHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: 400
   },
   image: {
+    marginTop: 30,
     height: 250,
-    width: 250
+    width: '90%',
+    borderRadius: 10,
+    alignSelf: 'center',
+    marginBottom: 10
   },
-  text: {
-    fontSize: 24,
+  title: {
+    fontSize: 16,
+    fontWeight: '600',
+    width: 400
+  },
+  button: {
+    borderRadius: 4,
+    backgroundColor: '#b4b4b4',
+    padding: 5
+  },
+  area: {
+    flexDirection: 'row',
+    width: 400
+  },
+  features: {
+    width: 400
+  },
+  icon: {
+    marginTop: 10,
+    width: 400
   }
 })
 

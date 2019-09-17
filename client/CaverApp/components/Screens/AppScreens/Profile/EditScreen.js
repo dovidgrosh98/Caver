@@ -5,7 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { REACT_APP_ACCESS_KEY_ID, REACT_APP_SECRET_ACCESS_KEY } from 'react-native-dotenv'
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
-import { createListing } from '../../../../services/ApiServices';
+import { updateListing, getListing } from '../../../../services/ApiServices';
 import * as ImagePicker from 'expo-image-picker';
 import { RNS3 } from 'react-native-aws3';
 
@@ -13,6 +13,7 @@ class CreateListingScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      listing: '',
       name: '',
       imgUrl: '',
       address: '',
@@ -26,8 +27,38 @@ class CreateListingScreen extends Component {
     }
   }
 
-  componentDidMount() {
-    this.getPermissionAsync();
+  async componentDidMount() {
+    await this.getPermissionAsync()
+    await this.fetchListing()
+
+  }
+
+  fetchListing = async () => {
+    const listing = await getListing(this.props.navigation.state.params.id)
+    const {
+      name,
+      imgUrl,
+      address,
+      city,
+      state,
+      description,
+      costPerNight,
+      beds,
+      adults,
+      freeWifi
+    } = listing.data
+    this.setState({
+      name,
+      imgUrl,
+      address,
+      city,
+      state,
+      description,
+      costPerNight,
+      beds,
+      adults,
+      freeWifi
+    })
   }
 
   getPermissionAsync = async () => {
@@ -95,7 +126,7 @@ class CreateListingScreen extends Component {
     } = this.state
     try {
       if (!this.state.isError) {
-        const resp = await createListing({
+        const resp = await updateListing({
           name,
           imgUrl,
           address,
@@ -106,7 +137,7 @@ class CreateListingScreen extends Component {
           beds,
           adults,
           freeWifi
-        })
+        }, this.props.navigation.state.params.id)
         if (resp.status === 200) {
         }
       }
@@ -116,6 +147,19 @@ class CreateListingScreen extends Component {
   }
 
   render() {
+    const {
+      name,
+      imgUrl,
+      address,
+      city,
+      state,
+      description,
+      costPerNight,
+      beds,
+      adults,
+      freeWifi
+    } = this.state
+    const { listing } = this.state
     return (
       <ScrollView
         contentContainerStyle={styles.container}
@@ -123,67 +167,63 @@ class CreateListingScreen extends Component {
       >
         <Input
           label="Title"
-          secureTextEntry={true}
           onChangeText={(text) => this.handleChange('name', text)}
           style={styles.input}
+          value={name}
         />
         <Text
           onPress={this.uploadImage}
         >
           Upload Image
         </Text>
-        {/* <Input
-          label="Image"
-          secureTextEntry={true}
-          onChangeText={(text) => this.handleChange('imgUrl', text)}
-          style={styles.input}
-        /> */}
         <Input
           label="Address"
-          secureTextEntry={true}
           onChangeText={(text) => this.handleChange('address', text)}
           style={styles.input}
+          value={address}
         />
         <Input
           label="City"
-          secureTextEntry={true}
           onChangeText={(text) => this.handleChange('city', text)}
           style={styles.input}
+          value={city}
         /><Input
           label="State"
-          secureTextEntry={true}
           onChangeText={(text) => this.handleChange('state', text)}
           style={styles.input}
+          value={state}
         />
         <Input
           label="Description"
-          secureTextEntry={true}
           onChangeText={(text) => this.handleChange('description', text)}
           style={styles.input}
+          value={description}
         />
         <Input
           label="Cost Per Night"
-          secureTextEntry={true}
           onChangeText={(text) => this.handleChange('costPerNight', text)}
           style={styles.input}
+          value={costPerNight}
         />
         <Input
           label="Amount of Beds"
           secureTextEntry={true}
           onChangeText={(text) => this.handleChange('beds', text)}
           style={styles.input}
+          value={beds}
         />
         <Input
           label="Adults"
           secureTextEntry={true}
           onChangeText={(text) => this.handleChange('adults', text)}
           style={styles.input}
+          value={adults}
         />
         <View>
           <Text>Free Wifi?</Text>
           <Switch
             onValueChange={this.toggleSwitch}
-            value={this.state.freeWifi}
+            value={freeWifi}
           />
         </View>
         <Button

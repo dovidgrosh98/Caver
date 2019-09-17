@@ -4,8 +4,7 @@ import { getListing, getGeoCode } from '../../../../services/ApiServices'
 import { Ionicons as IconComponent } from '@expo/vector-icons'
 import { Platform } from '@unimodules/core'
 import { background } from '../../../styles/Colors';
-import MapView from 'react-native-maps'
-import { Marker, Polyline } from 'react-native-maps'
+import MapView, { Marker, Polyline } from 'react-native-maps'
 import { ScrollView } from 'react-native-gesture-handler';
 
 
@@ -65,10 +64,10 @@ class ListingScreen extends Component {
             style={styles.image}
           />
           <View style={styles.textTitle}>
-            <Text>{listing.name}</Text>
-            <Text>{`$${listing.costPerNight}/night`}</Text>
+            <Text style={styles.title}>{listing.name}</Text>
+            <Text style={styles.cost}>{`$${listing.costPerNight}/Night`}</Text>
           </View>
-          <Text>{listing.description}</Text>
+          <Text style={styles.textDescription}>{listing.description}</Text>
           <Text
             onPress={() => this.props.navigation.navigate('Booking', { id: listing.id })}
           >
@@ -76,25 +75,25 @@ class ListingScreen extends Component {
           </Text>
         </View>
         <View style={styles.featureContainer}>
-          <View>
-            <IconComponent name={bedIcon} size={32} />
-            <Text>{`${listing.beds} Beds`}</Text>
+          <View style={styles.feature}>
+            <IconComponent name={bedIcon} size={32} color={'#b4b4b4'} />
+            <Text style={styles.featureText}>{`${listing.beds} Beds`}</Text>
           </View>
-          <View>
-            <IconComponent name={personIcon} size={32} />
-            <Text>{`${listing.adults} Adults`}</Text>
+          <View style={styles.feature}>
+            <IconComponent name={personIcon} size={32} color={'#b4b4b4'}  />
+            <Text style={styles.featureText}>{`${listing.adults} Adults`}</Text>
           </View>
-          <View>
-            <IconComponent name={wifiIcon} size={32} />
-            <Text>{listing.freeWifi ? "Free Wifi" : "No Wifi"}</Text>
+          <View style={styles.feature}>
+            <IconComponent name={wifiIcon} size={32} color={'#b4b4b4'} />
+            <Text style={styles.featureText}>{listing.freeWifi ? "Free Wifi" : "No Wifi"}</Text>
           </View>
         </View>
         <MapView
           liteMode={true}
           style={styles.map}
           region={{
-            latitude: latitude,
-            longitude: longitude,
+            latitude: Number(latitude),
+            longitude: Number(longitude),
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
@@ -103,22 +102,22 @@ class ListingScreen extends Component {
             title='Listing'
             pinColor='black'
             coordinate={{
-              latitude: latitude,
-              longitude: longitude,
+              latitude: Number(latitude),
+              longitude: Number(longitude),
             }}
           />
           <Marker
             title='Current Location'
             pinColor='black'
             coordinate={{
-              latitude: currentLat,
-              longitude: currentLng
+              latitude: Number(currentLat),
+              longitude: Number(currentLng)
             }}
           />
           <Polyline
             coordinates={[
-              { latitude: latitude, longitude: longitude },
-              { latitude: currentLat, longitude: currentLng }
+              { latitude: Number(latitude), longitude: Number(longitude) },
+              { latitude: Number(currentLat), longitude: Number(currentLng) }
             ]}
           />
         </MapView>
@@ -130,37 +129,58 @@ class ListingScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    flex: 1
+    height: 1000,
   },
   image: {
     width: '100%',
-    borderRadius: 30,
-    flex: 5,
+    borderRadius: 20,
+    height: 375,
+    marginBottom: 30
   },
   textContainer: {
     width: '100%',
-    flex: 3
   },
   textTitle: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    flex: 1
+    justifyContent: 'space-between',
+    padding: 20
+  },
+  title: {
+    fontSize: 18,
+    width: '50%',
+    fontFamily: 'Apple SD Gothic Neo',
+    flexWrap: 'wrap',
+    fontWeight: '600'
+  },
+  cost: {
+    fontSize: 18,
   },
   textDescription: {
-    flex: 3
+    fontSize: 16,
+    padding: 15,
+    fontFamily: 'Farah'
   },
   featureContainer: {
     width: '100%',
+    height: 70,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: background,
-    borderRadius: 20,
-    flex: 1,
+    backgroundColor: 'white',
+    borderRadius: 40,
+    alignItems: 'center',
+    marginVertical: 15,
+    shadowColor: 'black',
+    shadowOpacity: 0.8,
+  },
+  feature: {
     alignItems: 'center'
   },
+  featureText: {
+    color: '#b4b4b4'
+  },
   map: {
-    flex: 2,
     width: '100%',
+    height: 300,
   }
 })
 
