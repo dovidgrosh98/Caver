@@ -54,9 +54,9 @@ class CreateListingScreen extends Component {
       city,
       state,
       description,
-      costPerNight,
-      beds,
-      adults,
+      costPerNight: costPerNight.toString(),
+      beds: beds.toString(),
+      adults: adults.toString(),
       freeWifi
     })
   }
@@ -133,9 +133,9 @@ class CreateListingScreen extends Component {
           city,
           state,
           description,
-          costPerNight,
-          beds,
-          adults,
+          costPerNight: Number(costPerNight),
+          beds: Number(beds),
+          adults: Number(adults),
           freeWifi
         }, this.props.navigation.state.params.id)
         if (resp.status === 200) {
@@ -144,6 +144,7 @@ class CreateListingScreen extends Component {
     } catch (error) {
       throw error
     }
+    await this.props.navigation.navigate('Profile')
   }
 
   render() {
@@ -207,14 +208,12 @@ class CreateListingScreen extends Component {
         />
         <Input
           label="Amount of Beds"
-          secureTextEntry={true}
           onChangeText={(text) => this.handleChange('beds', text)}
           style={styles.input}
           value={beds}
         />
         <Input
           label="Adults"
-          secureTextEntry={true}
           onChangeText={(text) => this.handleChange('adults', text)}
           style={styles.input}
           value={adults}
@@ -226,9 +225,11 @@ class CreateListingScreen extends Component {
             value={freeWifi}
           />
         </View>
-        <Button
+        <Text
           onPress={this.handleSubmit}
-        />
+        >
+          Submit
+        </Text>
       </ScrollView>
     )
   }

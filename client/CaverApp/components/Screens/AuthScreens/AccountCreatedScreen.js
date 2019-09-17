@@ -7,7 +7,7 @@ const AccountCreatedScreen = ({ navigation }) => {
 	return (
 		<View style={styles.container}>
 			<Image
-				source={require('../../../assets/cryptkeyLogo.png')}
+				source={require('../../../assets/caverLogo.png')}
 				style={styles.image}
 			/>
 			<Text style={styles.text}>Account Successfully Created</Text>
@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
 		marginVertical: 20
 	},
 	image: {
-		height: 200,
-		width: 200
+		height: 400,
+		width: 400
 	}
 })
 
