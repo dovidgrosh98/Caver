@@ -28,7 +28,7 @@ class BookingScreen extends Component {
     const startDate = this.state.selectedStartDate
     const endDate = this.state.selectedEndDate
     const listingId = this.props.navigation.state.params.id
-    const book = await bookList(userId, listingId, {startDate, endDate})
+    const book = await bookList(userId, listingId, { startDate, endDate })
     await this.props.navigation.navigate('Home')
   }
 
@@ -59,14 +59,10 @@ class BookingScreen extends Component {
           selectedDayTextColor="#FFFFFF"
           onDateChange={this.onDateChange}
         />
-        <View>
-          <Text>SELECTED DATE:{startDate}</Text>
-          <Text>SELECTED END DATE:{endDate}</Text>
-        </View>
         <Text
-          onPress={this.book}
-        >
-          Submit</Text>
+          onPress={this.book}>
+          Submit
+        </Text>
       </View>
     );
   }

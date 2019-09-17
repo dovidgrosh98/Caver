@@ -10,7 +10,7 @@ export const ProfileNavigator = createStackNavigator(
   {
     headerMode: 'none',
     navigationOptions: {
-      headerVisible: false
+      headerVisible: true
     }
   }
 )

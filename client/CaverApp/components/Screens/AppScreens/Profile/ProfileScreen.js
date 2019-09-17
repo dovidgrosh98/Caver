@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
-import { View, Text, Image, StyleSheet, AsyncStorage } from 'react-native'
+import { View, Text, Image, StyleSheet, AsyncStorage, Dimensions } from 'react-native'
 import { getUserListings, userListingDelete, allBookings, getListing, deleteBook } from '../../../../services/ApiServices'
-import { Ionicons as IconComponent } from '@expo/vector-icons'
-import { Platform } from '@unimodules/core'
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
-import { Button } from '../../../common';
-
+const screenWidth = Math.round(Dimensions.get('window').width)
 
 
 class ProfileScreen extends Component {
@@ -64,22 +61,23 @@ class ProfileScreen extends Component {
   renderOwnItem = (listing) => {
     const { item } = listing
     return (
-      <View style={styles.container}>
-        <Text>{item.name}</Text>
+      <View style={styles.ownList}>
         <Image
-          style={styles.img}
+          style={styles.listingImg}
           source={{ uri: item.imgUrl }}
         />
-        <Text
-          onPress={() => this.editListing(item.id)}
-        >
-          Edit
+        <View style={{ flexDirection: 'row', justfyContent: 'space-between' }}>
+          <Text
+            style={{ marginHorizontal: 10 }}
+            onPress={() => this.editListing(item.id)}>
+            Edit
         </Text>
-        <Text
-          onPress={() => this.deleteListing(item.id)}
-        >
-          Delete
+          <Text
+            style={{ marginHorizontal: 10 }}
+            onPress={() => this.deleteListing(item.id)}>
+            Delete
         </Text>
+        </View>
       </View>
     )
   }
@@ -87,13 +85,13 @@ class ProfileScreen extends Component {
   renderBookedItem = (listing) => {
     const { item } = listing
     return (
-      <View style={styles.container}>
-        <Text>{item.booking.name}</Text>
+      <View style={{ width: screenWidth, justfyContent: 'center', alignItems: 'center' }}>
         <Image
-          style={styles.img}
+          style={styles.bookingImg}
           source={{ uri: item.booking.imgUrl }}
         />
         <Text
+          style={{fontSize: 16, fontWeight: '600'}}
           onPress={() => this.cancelBooking(item.id)}
         >
           Cancel
@@ -105,33 +103,70 @@ class ProfileScreen extends Component {
   render() {
     const { listings, bookings } = this.state
     return (
-      <View style={styles.container}>
-        <FlatList
-          data={listings}
-          renderItem={(item) => this.renderOwnItem(item)}
-          keyExtractor={(item, index) => index.toString()}
-          horizontal={true}
-        />
-        <FlatList
-          data={bookings}
-          renderItem={(item) => this.renderBookedItem(item)}
-          keyExtractor={(item, index) => index.toString()}
-          horizontal={true}
-        />
-      </View>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.ownListings}>
+          <Text style={styles.header}>Your Listings</Text>
+          <FlatList
+            data={listings}
+            renderItem={(item) => this.renderOwnItem(item)}
+            keyExtractor={(item, index) => item.id.toString()}
+            horizontal={true}
+          />
+        </View>
+        <View style={styles.bookings}>
+          <Text style={styles.reservations}>Reservations:</Text>
+          <FlatList
+            data={bookings}
+            renderItem={(item) => this.renderBookedItem(item)}
+            keyExtractor={(item, index) => item.id.toString()}
+          />
+        </View>
+      </ScrollView>
     )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
-  img: {
+  ownList: {
+    margin: 10,
+    alignItems: 'center',
+    marginBottom: 80
+  },
+  ownListings: {
+    flex: 1,
+    marginTop: 60,
+    marginLeft: 5
+  },
+  header: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginLeft: 15
+  },
+  listingsList: {
+    flex: 1
+  },
+  reservations: {
+    marginLeft: 15,
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginBottom: 20
+  },
+  bookings: {
+    flex: 1,
+  },
+  listingImg: {
     height: 200,
-    width: 200
+    width: 200,
+    borderRadius: 15
+  },
+  bookingImg: {
+    height: 300,
+    width: '90%',
+    borderRadius: 20
   }
 })
 

@@ -3,7 +3,7 @@ import { AsyncStorage } from 'react-native'
 import { getUser } from './Credentials'
 import { GOOGLE_MAPS } from 'react-native-dotenv'
 const JwtToken = AsyncStorage.getItem('token')
-const BASE_URL = `http://localhost:3000`
+const BASE_URL = `https://caver-app.herokuapp.com`
 
 const api = axios.create({
 	baseURL: BASE_URL,

@@ -123,7 +123,6 @@ class CreateListingScreen extends Component {
       >
         <Input
           label="Title"
-          secureTextEntry={true}
           onChangeText={(text) => this.handleChange('name', text)}
           style={styles.input}
         />
@@ -132,50 +131,37 @@ class CreateListingScreen extends Component {
         >
           Upload Image
         </Text>
-        {/* <Input
-          label="Image"
-          secureTextEntry={true}
-          onChangeText={(text) => this.handleChange('imgUrl', text)}
-          style={styles.input}
-        /> */}
         <Input
           label="Address"
-          secureTextEntry={true}
           onChangeText={(text) => this.handleChange('address', text)}
           style={styles.input}
         />
         <Input
           label="City"
-          secureTextEntry={true}
           onChangeText={(text) => this.handleChange('city', text)}
           style={styles.input}
         /><Input
           label="State"
-          secureTextEntry={true}
           onChangeText={(text) => this.handleChange('state', text)}
           style={styles.input}
         />
         <Input
           label="Description"
-          secureTextEntry={true}
           onChangeText={(text) => this.handleChange('description', text)}
           style={styles.input}
         />
         <Input
           label="Cost Per Night"
-          secureTextEntry={true}
           onChangeText={(text) => this.handleChange('costPerNight', text)}
           style={styles.input}
         />
         <Input
           label="Amount of Beds"
-          secureTextEntry={true}
           onChangeText={(text) => this.handleChange('beds', text)}
           style={styles.input}
         />
         <Input
           label="Adults"
-          secureTextEntry={true}
           onChangeText={(text) => this.handleChange('adults', text)}
           style={styles.input}
         />
@@ -186,9 +172,7 @@ class CreateListingScreen extends Component {
             value={this.state.freeWifi}
           />
         </View>
-        <Button
-          onPress={this.handleSubmit}
-        />
+        <Text onPress={this.handleSubmit}>Submit</Text>
       </ScrollView>
     )
   }

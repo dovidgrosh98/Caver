@@ -14,11 +14,13 @@ import HomeScreen from './components/Screens/AppScreens/Home/HomeScreen';
 import ChatScreen from './components/Screens/AppScreens/Chat/ChatScreen';
 import CreateListingScreen from './components/Screens/AppScreens/CreateListing/CreateListingScreen';
 import ProfileScreen from './components/Screens/AppScreens/Profile/ProfileScreen';
+import BookmarkScreen from './components/Screens/AppScreens/BookmarksScreen/BookmarksScreen';
 
 // Navigators
 const TabNavigator = createBottomTabNavigator(
 	{
 		Home: HomeNavigator,
+		Favorites: BookmarkScreen,
 		Create: CreateListingScreen,
 		Chat: ChatScreen,
 		Profile: ProfileNavigator
@@ -35,12 +37,13 @@ const TabNavigator = createBottomTabNavigator(
 								? `ios-home${focused ? '' : ''}`
 								: `md-home${focused ? '' : ''}`
 						break
-						case 'Bookmark':
+						case 'Favorites':
 						iconName =
 							Platform.OS === 'ios'
 								? `ios-bookmark${focused ? '' : ''}`
 								: `md-bookmark${focused ? '' : ''}`
 						break
+					
 					case 'Create':
 						iconName =
 							Platform.OS === 'ios'
@@ -71,7 +74,9 @@ const TabNavigator = createBottomTabNavigator(
 			activeTintColor: highlightColor,
 			inactiveTintColor: textColor,
 			style: {
-				backgroundColor: 'white'
+				backgroundColor: 'white',
+				height: 50,
+
 			}
 		},
 		initialRouteName: 'Home'

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, FlatList, Image, StyleSheet, Button, TextInput } from 'react-native'
+import { View, Text, FlatList, Image, StyleSheet } from 'react-native'
 import { allListings } from '../../../../services/ApiServices';
 import { FontAwesome } from '@expo/vector-icons'
 
@@ -30,21 +30,20 @@ class HomeScreen extends Component {
         />
         <View style={styles.textHeader}>
           <Text>{`$${item.costPerNight} Per Night`}</Text>
-          <Text 
-          style={styles.button}
-          onPress={() => this.props.navigation.navigate('Listing', { id: item.id })}
+          <Text
+            style={styles.button}
+            onPress={() => this.props.navigation.navigate('Listing', { id: item.id })}
           >
             Book Now
           </Text>
-
         </View>
         <Text style={styles.title}>{item.name}</Text>
         <Text style={styles.area}>{item.city}, {item.state}</Text>
         <Text style={styles.features}>{item.beds} Beds, {item.adults} Adults</Text>
-        <FontAwesome 
-        onPress={() => this.props.navigation.navigate('Chat', { id: item.id })}
-        style={styles.icon} 
-        name={'comment'} size={20} 
+        <FontAwesome
+          onPress={() => this.props.navigation.navigate('Chat', { id: item.id })}
+          style={styles.icon}
+          name={'comment'} size={20}
         />
       </View>
     )

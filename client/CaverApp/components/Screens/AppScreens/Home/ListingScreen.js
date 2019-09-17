@@ -69,6 +69,7 @@ class ListingScreen extends Component {
           </View>
           <Text style={styles.textDescription}>{listing.description}</Text>
           <Text
+            style={styles.book}
             onPress={() => this.props.navigation.navigate('Booking', { id: listing.id })}
           >
             Book
@@ -76,20 +77,19 @@ class ListingScreen extends Component {
         </View>
         <View style={styles.featureContainer}>
           <View style={styles.feature}>
-            <IconComponent name={bedIcon} size={32} color={'#b4b4b4'} />
+            <IconComponent name={bedIcon} size={32} color={'#616161'} />
             <Text style={styles.featureText}>{`${listing.beds} Beds`}</Text>
           </View>
           <View style={styles.feature}>
-            <IconComponent name={personIcon} size={32} color={'#b4b4b4'}  />
+            <IconComponent name={personIcon} size={32} color={'#616161'}  />
             <Text style={styles.featureText}>{`${listing.adults} Adults`}</Text>
           </View>
           <View style={styles.feature}>
-            <IconComponent name={wifiIcon} size={32} color={'#b4b4b4'} />
+            <IconComponent name={wifiIcon} size={32} color={'#616161'} />
             <Text style={styles.featureText}>{listing.freeWifi ? "Free Wifi" : "No Wifi"}</Text>
           </View>
         </View>
         <MapView
-          liteMode={true}
           style={styles.map}
           region={{
             latitude: Number(latitude),
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   textTitle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 20
+    paddingHorizontal: 20
   },
   title: {
     fontSize: 18,
@@ -157,26 +157,34 @@ const styles = StyleSheet.create({
   },
   textDescription: {
     fontSize: 16,
-    padding: 15,
-    fontFamily: 'Farah'
+    paddingHorizontal: 15,
+    marginVertical: 10,
+    fontFamily: 'Futura'
+  },
+  book: {
+    alignSelf: 'flex-end',
+    marginHorizontal: 10,
+    backgroundColor: '#918476',
+    padding: 10,
+    color: '#ffffff'
   },
   featureContainer: {
     width: '100%',
     height: 70,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: 'white',
+    backgroundColor: '#f5f5f5',
     borderRadius: 40,
     alignItems: 'center',
     marginVertical: 15,
-    shadowColor: 'black',
+    shadowColor: '#b4b4b4',
     shadowOpacity: 0.8,
   },
   feature: {
     alignItems: 'center'
   },
   featureText: {
-    color: '#b4b4b4'
+    color: '#616161'
   },
   map: {
     width: '100%',
