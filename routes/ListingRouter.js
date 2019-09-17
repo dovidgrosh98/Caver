@@ -102,4 +102,18 @@ ListingRouter.delete('/:id', async (req, res) => {
   }
 })
 
+ListingRouter.delete('/:id/book', async (req, res) => {
+  try {
+    const id = req.params.id
+    const booking = await UserBooking.findByPk(id)
+    if (!booking) throw Error
+    await booking.destroy()
+    res.json({
+      message: `Booking with id ${id} deleted`
+    })
+  } catch (e) {
+    res.json({ msg: e.message })
+  }
+})
+
 module.exports = ListingRouter

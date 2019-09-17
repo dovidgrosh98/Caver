@@ -116,6 +116,7 @@ const main = async () => {
     await Listing4.setUser(David)
     await Listing5.setUser(Justin)
     await Listing6.setUser(Justin)
+    
   } catch (error) {
     throw error
   } finally {

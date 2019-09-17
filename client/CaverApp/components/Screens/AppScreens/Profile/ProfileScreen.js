@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, Image, StyleSheet, AsyncStorage } from 'react-native'
-import { getUserListings, userListingDelete, allBookings, getListing } from '../../../../services/ApiServices'
+import { getUserListings, userListingDelete, allBookings, getListing, deleteBook } from '../../../../services/ApiServices'
 import { Ionicons as IconComponent } from '@expo/vector-icons'
 import { Platform } from '@unimodules/core'
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
@@ -39,21 +39,26 @@ class ProfileScreen extends Component {
 
   fetchBookings = async () => {
     const bookings = await allBookings(this.state.id)
-    bookings.map(async (booking) => {
+    bookings.forEach(async (booking) => {
       const listing = await getListing(booking.listingId)
       this.setState(prevState => {
-        return this.state.bookings = [...prevState.bookings, listing.data]
+        return this.state.bookings = [...prevState.bookings, { booking: listing.data, id: booking.id }]
       })
     })
   }
 
   editListing = (id) => {
-
+    this.props.navigation.navigate('Edit', { id })
   }
 
   deleteListing = async (id) => {
     await userListingDelete(id)
     await this.fetchListings(this.state.id)
+  }
+
+  cancelBooking = async (id) => {
+    await deleteBook(id)
+    await this.fetchBookings()
   }
 
   renderOwnItem = (listing) => {
@@ -83,15 +88,19 @@ class ProfileScreen extends Component {
     const { item } = listing
     return (
       <View style={styles.container}>
-        <Text>{item.name}</Text>
+        <Text>{item.booking.name}</Text>
         <Image
           style={styles.img}
-          source={{ uri: item.imgUrl }}
+          source={{ uri: item.booking.imgUrl }}
         />
+        <Text
+          onPress={() => this.cancelBooking(item.id)}
+        >
+          Cancel
+        </Text>
       </View>
     )
   }
-
 
   render() {
     const { listings, bookings } = this.state
@@ -100,13 +109,13 @@ class ProfileScreen extends Component {
         <FlatList
           data={listings}
           renderItem={(item) => this.renderOwnItem(item)}
-          keyExtractor={(item, index) => index}
+          keyExtractor={(item, index) => index.toString()}
           horizontal={true}
         />
         <FlatList
           data={bookings}
           renderItem={(item) => this.renderBookedItem(item)}
-          keyExtractor={(item, index) => index}
+          keyExtractor={(item, index) => index.toString()}
           horizontal={true}
         />
       </View>

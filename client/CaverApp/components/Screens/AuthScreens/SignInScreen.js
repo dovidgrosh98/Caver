@@ -97,6 +97,7 @@ export default class SignInScreen extends Component {
           error={this.state.isError}
           secureTextEntry={true}
           onChangeText={(text) => this.handleChange('password', text)}
+          secureTextEntry={true}
         />
         {this.state.isError ? (
           <Text style={styles.error}>{this.state.errorMsg}</Text>

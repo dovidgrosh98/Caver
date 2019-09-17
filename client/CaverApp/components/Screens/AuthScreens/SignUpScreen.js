@@ -134,12 +134,14 @@ export default class CreateAccountScreen extends Component {
             secureTextEntry={true}
             error={this.state.isError}
             onChangeText={(text) => this.handleChange('password', text)}
+            secureTextEntry={true}
           />
           <Input
             label="Confirm Password"
             secureTextEntry={true}
             error={this.state.isError}
             onChangeText={(text) => this.handleChange('confirmPassword', text)}
+            secureTextEntry={true}
           />
           <View style={styles.row}>
             <Text style={styles.rowText}>Lister?</Text>

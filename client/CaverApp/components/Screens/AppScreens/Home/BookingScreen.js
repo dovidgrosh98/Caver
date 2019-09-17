@@ -29,6 +29,7 @@ class BookingScreen extends Component {
     const endDate = this.state.selectedEndDate
     const listingId = this.props.navigation.state.params.id
     const book = await bookList(userId, listingId, {startDate, endDate})
+    await this.props.navigation.navigate('Home')
   }
 
   onDateChange = (date, type) => {

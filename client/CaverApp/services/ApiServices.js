@@ -100,6 +100,16 @@ export const createListing = async (data) => {
 	}
 } 
 
+export const updateListing = async (data, id) => {
+	try {
+		const res = await api.put(`/list/${id}`, data)
+		return res
+	} 
+	catch (error) {
+		throw error	
+	}
+} 
+
 export const userListingDelete = async (id) => {
 	try {
 		const deletedList = await api.delete(`/list/${id}`)
@@ -123,6 +133,16 @@ export const allBookings = async (id) => {
 	try {
 		const bookings = await api.get(`/list/${id}/book`)
 		return bookings.data
+	} 
+	catch (error) {
+		throw error	
+	}
+}
+
+export const deleteBook = async (id) => {
+	try {
+		const booking = await api.delete(`/list/${id}/book`)
+		console.log(booking)
 	} 
 	catch (error) {
 		throw error	
