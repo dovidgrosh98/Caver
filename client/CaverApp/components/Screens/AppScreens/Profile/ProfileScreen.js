@@ -106,20 +106,27 @@ class ProfileScreen extends Component {
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.ownListings}>
           <Text style={styles.header}>Your Listings</Text>
+          { listings.length > 0 ?
           <FlatList
             data={listings}
             renderItem={(item) => this.renderOwnItem(item)}
             keyExtractor={(item, index) => item.id.toString()}
             horizontal={true}
           />
+          :
+          <Text></Text>
+          }
         </View>
         <View style={styles.bookings}>
           <Text style={styles.reservations}>Reservations:</Text>
+          { bookings.length > 0 ?
           <FlatList
             data={bookings}
             renderItem={(item) => this.renderBookedItem(item)}
             keyExtractor={(item, index) => item.id.toString()}
           />
+          : <Text></Text>
+          }
         </View>
       </ScrollView>
     )
